@@ -1,0 +1,73 @@
+global:
+  image:
+    tag: 8.2.29
+  ingress:
+    enabled: true
+    className: nginx
+    host: "jensil.de"
+    tls:
+      enabled: true
+      secretName: "tls-secret"
+  identity:
+    auth:
+      enabled: true
+      publicIssuerUrl: "https://jensil.de/auth/realms/camunda-platform"
+      operate:
+        existingSecret: EasySecret
+        redirectUrl: "https://jensil.de/operate"
+      zeebe:
+        existingSecret: EasySecret
+
+operate:
+  contextPath: "/operate"
+
+identity:
+  enabled: true
+  contextPath: "/identity"
+  fullURL: "https://jensil.de/identity"
+  keycloak:
+    auth:
+      adminPassword: EasySecret
+      managementPassword: EasySecret
+    extraEnvVars:
+      - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+        value: "true"
+      - name: KEYCLOAK_FRONTEND_URL
+        value: "https://jensil.de/auth"
+  # for multi-tenancy
+  postgresql:
+    enabled: false
+
+tasklist:
+  enabled: false
+
+optimize:
+  enabled: false
+
+# Reduce for Zeebe and Gateway the configured replicas and with that the required resources
+# to get it running locally
+zeebe:
+  clusterSize: 1
+  partitionCount: 1
+  replicationFactor: 1
+  pvcSize: 10Gi
+
+zeebe-gateway:
+  ingress:
+    enabled: true
+    className: nginx
+    host: "jensil.de"
+    tls:
+      enabled: true
+      secretName: "tls-secret"
+  replicas: 1
+
+connectors:
+  enabled: false
+
+elasticsearch:
+  master:
+    replicaCount: 1
+    # Request smaller persistent volumes.
+    persistence:
+      size: 15Gi

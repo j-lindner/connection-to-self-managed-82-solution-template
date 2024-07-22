@@ -27,7 +27,6 @@ public class ProcessController {
 
     LOG.info(
         "Starting process `" + ProcessConstants.BPMN_PROCESS_ID + "` with variables: " + variables);
-
     zeebe
         .newCreateInstanceCommand()
         .bpmnProcessId(ProcessConstants.BPMN_PROCESS_ID)

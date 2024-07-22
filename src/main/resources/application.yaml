@@ -1,0 +1,6 @@
+# cluster
+zeebe.client.broker.gatewayAddress: jensil.de:443
+zeebe.client.cloud.auth-url: https://jensil.de:443/auth/realms/camunda-platform/protocol/openid-connect/token
+zeebe.client.cloud.client-id: zeebe
+zeebe.client.cloud.client-secret: EasySecret
+
